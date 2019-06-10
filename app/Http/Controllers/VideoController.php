@@ -14,16 +14,16 @@ class VideoController extends Controller
     }
 
     public function index(Video $vd, Apikey $pk){ // главная страница
-        $search = ["как сделать", "про футбол", "лайфхаки", "мстители", "годзила", "человек-паук", "телефоны", "php", "java", "гонки"]; //  Поисковый запрос
-        $limit = 50; // Количество записей на запрос
+        //$search = ["как сделать", "про футбол", "лайфхаки", "мстители", "годзила", "человек-паук", "телефоны", "php", "java", "гонки"]; //  Поисковый запрос
+        $search = ["xiaomi"];
+        $limit = 5; // Количество записей на запрос
         $apikey = $pk->getListApiKey(); // получаем список активных ключей
-        $videos = [];
-        //dd($apikey);
+
         if(!empty($apikey)){
-            $videos = $this->search_key($vd, $pk, $apikey, $search, $limit);
+            $this->search_key($vd, $pk, $apikey, $search, $limit); // поиск видео
         }
 
-        return view('particals.index', ['videos' => $videos]); // показываем на главной
+        return view('particals.index'); // показываем на главной
     }
 
     public function search_key($vd, $pk, $apikey, $search, $limit){ // запись в массив видео по ключевым фразам
@@ -39,17 +39,6 @@ class VideoController extends Controller
             }
             return $res;
     }
-
-    /*public function rec_apikey($vd, $pk, $apikey, $search, $count, $limit){ // рекурсивная функция, которая перебирает все доступные ключи
-        if($count >= count($apikey)){ // если ключи закончились, то говорим об этом
-            return 0;
-        }
-        $result = $this->search_youtube($vd, $pk, $search, $apikey[$count], $limit); // получаем результат либо ошибку
-        if($result != "403"){ // если нет ошибки, товозвращаем массив
-            return $result;
-        }
-        return $this->rec_apikey($vd, $pk, $apikey, $search, $count+1, $limit); // если ошибка 403, то вызываем рекурсивно, со следующим ключом
-    }*/
 
     public function list_youtube(Video $vd){ // Выводим список видео
         $video = $vd->getVideoList();
@@ -84,7 +73,7 @@ class VideoController extends Controller
             if(!isset($res->error->code)) { // проверяем на существование ошибки 403
                 for ($i = 0; $i < count($res->items); $i++) {
                     if (!$vd->getLiken($res->items[$i]->snippet->title)) { // исключаем дубли
-                        $this->save_video($res->items[$i]->snippet->title, $res->items[$i]->id->videoId, $tags);// сохраняем полученные видео в бд
+                        $this->save_video($res->items[$i]->snippet->title, $res->items[$i]->id->videoId, $tags, $res->items[$i]->snippet->thumbnails->medium->url);// сохраняем полученные видео в бд
                     }
                 }
                 return $res; // получаем json с данным
@@ -102,14 +91,14 @@ class VideoController extends Controller
             }
     }
 
-    public function save_video($title, $video, $tags){ // сохраняем полученные видео в бд
+    public function save_video($title, $video, $tags, $img){ // сохраняем полученные видео в бд
         $vd = new Video();
         $vd->title = $title;
         $vd->h1 = $title;
         $vd->link = $this->translit($title);
         $vd->video = $video;
         $vd->tags = $tags;
-        $vd->img = null;
+        $vd->img = $img;
         $vd->save();
     }
 

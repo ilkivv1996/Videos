@@ -23,4 +23,8 @@ class Video extends Model
     public function getLiken($title){ // сравниваем с полученным списком, если есть не сохраняем, чтобы дублей не было
         return $this->where('title', $title)->first();
     }
+
+    public function getUploadVideos($video){
+        $this->where('video', $video)->get();
+    }
 }
