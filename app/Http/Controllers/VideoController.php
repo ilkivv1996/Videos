@@ -18,14 +18,16 @@ class VideoController extends Controller
     }
 
     public function index(Video $vd, Apikey $pk, Menu $menu){ // главная страница
-        //$search = ["как сделать", "про футбол", "лайфхаки", "мстители", "годзила", "человек-паук", "телефоны", "php", "java", "гонки"]; //  Поисковый запрос
-        $search = ["xiaomi", "как сделать"];
+        $search = ["как сделать", "про футбол", "лайфхаки", "мстители", "годзила", "человек-паук", "телефоны", "php", "java", "гонки"]; //  Поисковый запрос
+        //$search = ["xiaomi", "как сделать"];
         $limit = 5; // Количество записей на запрос
         $apikey = $pk->getListApiKey(); // получаем список активных ключей
 
-        /*if(!empty($apikey)){
+        if(!isset($apikey)){
+            echo "Закончились ключи";
+        }else{
             $this->search_key($vd, $pk, $menu, $apikey, $search, $limit); // поиск видео
-        }*/
+        }
 
         return view('particals.index', $this->data); // показываем на главной
     }
@@ -54,6 +56,7 @@ class VideoController extends Controller
         $this->data['category'] = $menu->getItemMenuToUrl($url); // берем элемент меню по урл
         //dd($per);
         $this->data['videos'] = $vd->getVideoCategory($this->data['category']->title); // фильтруем видео по полученному теги
+        //dd($this->data);
         return view('particals.videos_category', $this->data);
     }
 
@@ -67,7 +70,7 @@ class VideoController extends Controller
         return view('particals.video', $this->data);
     }
 
-    public function search_youtube($vd,$pk, $search, $apikey, $limit){ // ищем видеоролики по каждому запросу
+    public function search_youtube($vd, $pk, $search, $apikey, $limit){ // ищем видеоролики по каждому запросу
         //dd($apikey);
         $tags = $search;
         $search =  urlencode($search); // заменяем пробелы на проценты
@@ -109,7 +112,8 @@ class VideoController extends Controller
         $vd = new Video();
         $vd->title = $title;
         $vd->h1 = $title;
-        $vd->link = $this->translit($title);
+        $vd->url = $this->translit($title);
+        $vd->path_url = $this->translit($tags) . '/' .$this->translit($title);
         $vd->video = $video;
         $vd->tags = $tags;
         $vd->img = $img;

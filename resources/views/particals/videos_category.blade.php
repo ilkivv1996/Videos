@@ -6,9 +6,13 @@
 
 @section('content')
     <a href="/">На главную</a>
-    @foreach($videos as $item)
-        <h5>{{ $item->title }}</h5>
-        <img src="{{$item->img}}"></br>
-        <a href="{{$category->url}}/{{$item->link}}">Смотреть видео</a>
-    @endforeach
+    @if(!isset($videos))
+   <p>К сожалению ничего не найдено</p>
+    @else
+        @foreach($videos as $item)
+            <h5>{{ $item->title }}</h5>
+            <img src="{{$item->img}}"></br>
+            <a href="{{$category->url}}/{{$item->url}}">Смотреть видео</a>
+        @endforeach
+    @endif
 @endsection

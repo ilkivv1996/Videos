@@ -14,7 +14,7 @@ class Video extends Model
     }
 
     public function getVideo($url){ // получаем определенное видео при переходе по ссылке
-        return $this->where('link', $url)->firstOrFail();
+        return $this->where('url', $url)->firstOrFail();
     }
 
     public function getVideoCategory($url){ // получаем список видео по определенному тегу

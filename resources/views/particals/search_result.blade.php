@@ -12,7 +12,7 @@
             @foreach($search as $item)
                 <h5>{{ $item->title }}</h5>
                 <img src="{{$item->img}}"></br>
-                <a href="{{$item->tags}}/{{$item->link}}">Смотреть видео</a>
+                <a href="{{$item->path_url}}">Смотреть видео</a>
             @endforeach
         @endif
     </row>
