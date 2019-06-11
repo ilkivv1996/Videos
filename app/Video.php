@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class Video extends Model
 {
@@ -16,6 +17,10 @@ class Video extends Model
         return $this->where('link', $url)->firstOrFail();
     }
 
+    public function getVideoCategory($url){ // получаем список видео по определенному тегу
+        return $this->where('tags', $url)->get();
+    }
+
     public function getRandom($tags, $limit){ // получаем список видео из бд
         return $this->where('tags', $tags)->inRandomOrder()->limit($limit)->get();
     }
@@ -24,7 +29,11 @@ class Video extends Model
         return $this->where('title', $title)->first();
     }
 
-    public function getUploadVideos($video){
-        $this->where('video', $video)->get();
+    /*public function getUploadVideos($video){
+        return $this->where('video', $video)->get();
+    }*/
+
+    public function getSearch($search){
+        return $this->where('title', 'like', '%'. $search . '%')->get();
     }
 }

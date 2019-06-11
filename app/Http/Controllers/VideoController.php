@@ -6,29 +6,34 @@ use Illuminate\Http\Request;
 use App\Video;
 use App\Apikey;
 use Mockery\Exception;
-
+use App\Menu;
 class VideoController extends Controller
 {
-    public function __construct()
+
+    function __construct(Menu $menu)
     {
+        $this->data = [];
+        $this->data['menu'] = $menu->getMenu(); // вывводим меню
+
     }
 
-    public function index(Video $vd, Apikey $pk){ // главная страница
+    public function index(Video $vd, Apikey $pk, Menu $menu){ // главная страница
         //$search = ["как сделать", "про футбол", "лайфхаки", "мстители", "годзила", "человек-паук", "телефоны", "php", "java", "гонки"]; //  Поисковый запрос
-        $search = ["xiaomi"];
+        $search = ["xiaomi", "как сделать"];
         $limit = 5; // Количество записей на запрос
         $apikey = $pk->getListApiKey(); // получаем список активных ключей
 
-        if(!empty($apikey)){
-            $this->search_key($vd, $pk, $apikey, $search, $limit); // поиск видео
-        }
+        /*if(!empty($apikey)){
+            $this->search_key($vd, $pk, $menu, $apikey, $search, $limit); // поиск видео
+        }*/
 
-        return view('particals.index'); // показываем на главной
+        return view('particals.index', $this->data); // показываем на главной
     }
 
-    public function search_key($vd, $pk, $apikey, $search, $limit){ // запись в массив видео по ключевым фразам
+    public function search_key($vd, $pk, $menu, $apikey, $search, $limit){ // запись в массив видео по ключевым фразам
         $res = [];
             for ($i = 0; $i < count($search); $i++) {
+                $this->save_menus($search[$i], $menu);
                 $result = $this->search_youtube($vd,$pk, $search[$i], $apikey, $limit);
                 if ($result == "0") {
                     echo "превышен лимит запросов";
@@ -40,17 +45,26 @@ class VideoController extends Controller
             return $res;
     }
 
-    public function list_youtube(Video $vd){ // Выводим список видео
-        $video = $vd->getVideoList();
-        return view('particals.videos', ['video' => $video]);
+    /*public function list_youtube(Video $vd){ // Выводим список видео
+        $this->data['videos'] = $vd->getVideoList();
+        return view('particals.videos', $this->data);
+    }*/
+
+    public function video_category($url, Video $vd, Menu $menu){ // получаем список видео определенной категории по соответствующему тегу
+        $this->data['category'] = $menu->getItemMenuToUrl($url); // берем элемент меню по урл
+        //dd($per);
+        $this->data['videos'] = $vd->getVideoCategory($this->data['category']->title); // фильтруем видео по полученному теги
+        return view('particals.videos_category', $this->data);
     }
 
-    public function video($url, Video $vd){ // Выводим список видео
-        $video = $vd->getVideo($url);
+    public function video($url1, $url2, Video $vd){ // Выводим список видео
+        //$this->data['category'] = $menu->getItemMenuToUrl($url1); //получаем категорию
+        $this->data['url1'] = $url1;
+        $this->data['video'] = $vd->getVideo($url2);
         $limit = 6;
         //dd($video->tags);
-        $random = $vd->getRandom($video->tags, $limit);
-        return view('particals.video', ['video' => $video, 'random' => $random]);
+        $this->data['random'] = $vd->getRandom($this->data['video']->tags, $limit);
+        return view('particals.video', $this->data);
     }
 
     public function search_youtube($vd,$pk, $search, $apikey, $limit){ // ищем видеоролики по каждому запросу
@@ -102,6 +116,17 @@ class VideoController extends Controller
         $vd->save();
     }
 
+    public function save_menus($title, $menu){ // сразу сохраняем полученные теги в меню
+        $per = $menu->getItemMenu($title);
+        if(empty($per)){ // проверяем есть ли такой элемент меню, если нет то добавляем
+            $menu = new Menu();
+            $menu->title = $title;
+            $menu->url = $this->translit($title);
+            $menu->save();
+        }
+
+    }
+
     public function update_key($pk, $key){ // делаем ключ неактивный
         $apikey = $pk->getFirstApiKey($key);
         $apikey->active = 0;
@@ -121,5 +146,9 @@ class VideoController extends Controller
 
     }
 
-
+    public function search(Request $request, Video $vd){
+        $this->data['search'] = $vd->getSearch($request->search);
+        //dd($this->data['search']);
+        return view('particals.search_result', $this->data);
+    }
 }
