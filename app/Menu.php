@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
-    protected $table = 'menus';
+    protected $table = 'def_menus';
 
     public function getMenu(){// берем из тегов все уникалльные записи в рандомном порядке для меню
         return $this->inRandomOrder()->limit(20)->get();
