@@ -1,3 +1,4 @@
+<a href="/">Главная</a>
 @foreach($menu as $item)
-    <a href="/{{ $item->url }}">{!! $item->title!!}</a>
+    <a href="/videos/{{ $item->url }}">{!! $item->title!!}</a>
 @endforeach

@@ -12,7 +12,7 @@
         @foreach($videos as $item)
             <h5>{{ $item->title }}</h5>
             <img src="{{$item->img}}"></br>
-            <a href="{{$category->url}}/{{$item->url}}">Смотреть видео</a>
+            <a href="{{$item->path_url}}">Смотреть видео</a>
         @endforeach
     @endif
 @endsection

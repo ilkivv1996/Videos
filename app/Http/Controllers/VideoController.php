@@ -23,11 +23,11 @@ class VideoController extends Controller
         $limit = 5; // Количество записей на запрос
         $apikey = $pk->getListApiKey(); // получаем список активных ключей
 
-        /*if(!isset($apikey)){
+        if(isset($apikey)){
             echo "Закончились ключи";
         }else{
             $this->search_key($vd, $pk, $menu, $apikey, $search, $limit); // поиск видео
-        }*/
+        }
 
         return view('particals.index', $this->data); // показываем на главной
     }
@@ -113,7 +113,7 @@ class VideoController extends Controller
         $vd->title = $title;
         $vd->h1 = $title;
         $vd->url = $this->translit($title);
-        $vd->path_url = $this->translit($tags) . '/' .$this->translit($title);
+        $vd->path_url = '/videos/' . $this->translit($tags) . '/' .$this->translit($title);
         $vd->video = $video;
         $vd->tags = $tags;
         $vd->img = $img;

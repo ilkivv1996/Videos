@@ -16,8 +16,12 @@ Route::get('/', 'VideoController@index')->name('index'); // главная
 
 //Route::get('/videos', 'VideoController@list_youtube')->name('list_youtube'); // список видео
 
-Route::get('{url}', 'VideoController@video_category')->name('video_category'); // список видео по категории
+Route::get('/videos/{url}', 'VideoController@video_category')->name('video_category'); // список видео по категории
 
-Route::get('{url1}/{url2}', 'VideoController@video')->name('video'); // просмотр одного видео
+Route::get('/videos/{url1}/{url2}', 'VideoController@video')->name('video'); // просмотр одного видео
 
 Route::post('/search', 'VideoController@search')->name('search'); // просмотр одного видео
+
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});
