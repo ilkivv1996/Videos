@@ -7,15 +7,11 @@ use App\Video;
 use App\Apikey;
 use Mockery\Exception;
 use App\Menu;
-class VideoController extends Controller
+
+class VideoController extends IndexController
 {
 
-    function __construct(Menu $menu)
-    {
-        $this->data = [];
-        $this->data['menu'] = $menu->getMenu(); // вывводим меню
 
-    }
 
     public function index(Video $vd, Apikey $pk, Menu $menu){ // главная страница
         //$search = ["как сделать", "про футбол", "лайфхаки", "мстители", "годзила", "человек-паук", "телефоны", "php", "java", "гонки"]; //  Поисковый запрос
@@ -149,9 +145,5 @@ class VideoController extends Controller
 
     }
 
-    public function search(Request $request, Video $vd){
-        $this->data['search'] = $vd->getSearch($request->search);
-        //dd($this->data['search']);
-        return view('particals.search_result', $this->data);
-    }
+
 }

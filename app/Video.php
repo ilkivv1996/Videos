@@ -37,7 +37,7 @@ class Video extends Model
         return $this->where('video', $video)->get();
     }*/
 
-    public function getSearch($search){
+    public function getSearch($search){ // поиск
         return $this->where('title', 'like', '%'. $search . '%')->get();
     }
 }

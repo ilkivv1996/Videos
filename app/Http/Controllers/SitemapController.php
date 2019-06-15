@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Sitemap;
 
-class SitemapController extends Controller
+class SitemapController extends IndexController
 {
     public function sitemapIndex(Sitemap $sm){
         $this->data['sitemaps'] = $sm->getSitemap();
