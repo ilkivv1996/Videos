@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        'App\Console\Commands\SitemapGenerate', //добавили нашу команду
     ];
 
     /**
@@ -30,24 +30,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)// выполняем команды по расписанию
     {
+        //$schedule->command('sitemap')->dailyAt('01:00');
+        $schedule->command('sitemap')->dailyAt('01:00'); // генерация sitemap раз в сутки в час ночи
+        $schedule->command('sitemap')->everyMinute();
 
-        //$schedule->call($this->trueApiKey())->everyMinute();
-        $schedule->call(function () {
-            $date = Carbon::now(); // получаем текущую дату
-
-            $apikey = new Apikey(); // создаем экземпляр класса
-            $key = $apikey->getFalseApiKey(); // получаем неактивные ключи
-            //Log::info($key[0]->updated_at->diffInHours($date, false));
-            //Log::info(diffInHours($date, $key[0]->updated_at));
-             foreach($key as $item) {
-                Log::info($apikey);
-                if($item->updated_at->diffInHours($date, false) >= 24){ // сравниваем текущую дату и последнее обновление, если есть сутки, то активируем
-                    $pk = $apikey->getFirstApiKey($item->key); // получаем запись
-                    $pk->active = 1; // делаем активной
-                    $pk->save();
-                }
-            }
-        })->everyMinute();
     }
 
 
@@ -64,16 +50,5 @@ class Kernel extends ConsoleKernel
         require base_path('routes/console.php');
     }
 
-    public function trueApiKey(){
-        Log::info("Запуск");
-        $date = Carbon::now();
-        $toDateString = $date->toDateString();
-        $toTimeString = $date->toTimeString();
-        Log::info($toDateString);
-        $apikey = Apikey::getFalseApiKey();
-        /*if(){
-            $apikey->active = 1;
-            $apikey->save();
-        }*/
-    }
+
 }

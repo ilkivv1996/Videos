@@ -25,3 +25,5 @@ Route::post('/search', 'VideoController@search')->name('search'); // просм�
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
+
+Route::get('sitemap.xml', 'SitemapController@sitemapIndex');
