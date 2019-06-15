@@ -97,9 +97,9 @@ class SitemapGenerate extends Command
         $sitemap->truncate();
     }
 
-    function compressReport($filename) //сжимаем файл
+    /*function compressReport($filename) //сжимаем файл
     {
         $gz = $filename . '.gz';
         compress
-    }
+    }*/
 }
