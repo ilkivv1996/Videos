@@ -1,0 +1,59 @@
+/* CSS Document */
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+@import url(https://fonts.googleapis.com/css?family=Bree+Serif);
+
+
+body {
+
+    font-size:16px;
+    line-height: 16px;
+    color: #0e0d0b;
+    word-wrap:break-word !important;
+}
+
+/*для меню*/
+
+#container {
+    margin: 0 auto;
+}
+
+nav {
+    margin: 00px 0;
+    background-color: #EB6626;
+    text-align: center;
+}
+
+nav ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    position: relative;
+}
+
+nav ul li {
+    display:inline-block;
+    background-color: #EB6626;
+}
+
+nav a {
+    display:block;
+    padding:0 10px;
+    color:#FFF;
+    font-size:16px;
+    line-height: 35px;
+    text-decoration:none;
+}
+
+nav a:hover {
+    background-color: #000000;
+    color: #FFF;
+    text-decoration: none;
+}
+
+
+/*для шапки*/
+.banner {
+    display: block; /* Для старых браузеров */
+    height: 200px; /* Высота шапки */
+    background: url(/images/default.png) no-repeat center bottom;
+}

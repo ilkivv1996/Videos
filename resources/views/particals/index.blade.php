@@ -4,12 +4,23 @@
     Главная
 @endsection
 
+@section('link')
+    <link rel="stylesheet" href="css/index.css">
+@endsection
+
 @section('content')
-    Главная</br>
-    <h3>Рандомные видео</h3>
+
     @foreach($videos as $video)
-        <h6>{{ $video->title }}</h6>
-        <img src="{{$video->img}}"></br>
-        <a href="{{$video->path_url}}">Смотреть видео</a>
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div class="text_to_img">
+                <a href="{{$video->path_url}}"><img  src="{{$video->img}}" class="example_beauty" title="{{ $video->title }}" height="100%"></a>
+                <span>{{ $video->title }}</span>
+            </div>
+        </div>
     @endforeach
+    </div>
+@endsection
+
+@section('script')
+
 @endsection

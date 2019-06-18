@@ -6,14 +6,16 @@
 
 @section('content')
     <row>
-        <div class="col-md-8">
+        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
             <a href="/videos/{{$url1}}">Вернуться к списку видео</a>
-            <H1>{{$video->title}}</H1>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/{{$video->video}}" frameborder="0" allowfullscreen>
-            </iframe>
+            <h3>{{$video->title}}</h3>
+            <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{$video->video}}" frameborder="0" allowfullscreen></iframe>
+            </div>
         </div>
-        <div class="col-md-4"></div>
-        @include('particals.like_videos')
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+            @include('particals.like_videos')
+        </div>
     </row>
 
 @endsection

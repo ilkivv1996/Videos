@@ -1,0 +1,7 @@
+.custom-block{
+    margin-bottom: 20px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.custom-card{
+    box-shadow: 2px 2px 2px 2px rgba(122,122,122,0.1);
+}
