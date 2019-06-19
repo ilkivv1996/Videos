@@ -1,4 +1,4 @@
-<div class="row">
+
     <nav>
         <ul>
             <li><a href="/">Главная</a></li>
@@ -7,4 +7,4 @@
             @endforeach
         </ul>
     </nav>
-</div>
+

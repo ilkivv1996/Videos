@@ -20,31 +20,31 @@
 
         <!-- Latest compiled and minified JavaScript -->
     </head>
-    <body>
+    <body class="grey lighten-4">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-2 col-md-1"></div>
-            <div class="col-lg-8 col-md-10 col-sm-12 col-xs-12">
+            <div class="col-xl-2 col-lg-1"></div>
+            <div class="col-xl-8 col-lg-10 col-md-12 col-sm-12 col-xs-12">
                 @include('sections.header')
             </div>
-            <div class="col-lg-2 col-md-1"></div>
+            <div class="col-xl-2 col-lg-1"></div>
         </div>
         <div class="row">
-            <div class="col-lg-2 col-md-1"></div>
-            <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12">
+            <div class="col-xl-2 col-lg-1"></div>
+            <div class="col-xl-1 col-lg-2 col-md-2 col-sm-12 col-xs-12">
                 @include('sections.left')
             </div>
-            <div class="col-lg-7 col-md-9 col-sm-12 col-xs-12">
+            <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12 col-xs-12">
                 @yield('content')
             </div>
-            <div class="col-lg-2 col-md-1"></div>
+            <div class="col-xl-2 col-lg-1"></div>
         </div>
         <div class="row">
-            <div class="col-lg-2 col-md-1"></div>
-            <div class="col-lg-8 col-md-10 col-sm-12 col-xs-12">
+            <div class="col-xl-2 col-lg-1"></div>
+            <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-xs-12">
                 @include('sections.footer')
             </div>
-            <div class="col-lg-2 col-md-1"></div>
+            <div class="col-xl-2 col-lg-1"></div>
         </div>
     </div>
 
@@ -55,6 +55,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="js/header.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/jquery.matchHeight.js" type="text/javascript"></script>
     @yield('script')
     </body>
 </html>

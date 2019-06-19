@@ -1,2 +1,4 @@
- @include('particals.menu')
-<div class="banner"></div>
+
+@include('particals.menu')
+ @include('particals.jumbotron')
+

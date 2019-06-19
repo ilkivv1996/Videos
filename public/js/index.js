@@ -7,3 +7,7 @@
 $(document).ready(function() {
     $('.lightbox').magnificPopup({type:'image'});
 });
+
+$(function() {
+    $('.card-row').matchHeight(options);
+});
